@@ -1,0 +1,16 @@
+<ion-view >
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="patient in patients track by $index" href="#/app/patients/{{patient.id}}">
+        <div class="row">
+		  <div class="col col-25"><img class="avatar" src="http://api.randomuser.me/portraits/med/women/{{$index}}.jpg"></div>
+		  <div class="col col-65">
+		  	<h2>{{patient.name}}</h2>
+		  	<p>{{patient.phone}}</p>
+		  </div>
+		  <div class="col col-10 big"><i class="{{patient.status}}"></i></div>
+		</div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
