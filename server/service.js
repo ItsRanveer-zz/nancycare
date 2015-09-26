@@ -70,8 +70,10 @@ function getVitals (patientId, data) {
 		obj.appliesDateTime = entry.content.appliesDateTime;
 		obj.display = entry.content.name.coding[1].display;
 		dorules(collectionName, obj);
-		socket.emit(collectionName, obj);
 		db.insert(collectionName, obj);
+		if (socket) {
+			socket.emit(collectionName, obj);
+		}
 		cb();
 	});
 }
@@ -80,13 +82,18 @@ function dorules (collectionName, obj) {
   if (collectionName === 'MDC_PULS_OXIM_PULS_RATE') {
   	if (obj.value < 60 || obj.value > 80) {
   		obj.abnormal = true;
-  		socket.emit('abnormal', obj);
+  		if (socket) {
+			socket.emit('abnormal', obj);
+		}
+  		
   	}
   };
   if (collectionName === 'MDC_RESP_RATE') {
   	if (obj.value < 12 || obj.value > 25) {
   		obj.abnormal = true;
-  		socket.emit('abnormal', obj);
+  		if (socket) {
+			socket.emit('abnormal', obj);
+		}
   	}
   };
 }
