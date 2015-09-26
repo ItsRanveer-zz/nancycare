@@ -5,7 +5,7 @@ app.service("socket", function() {
 	var socket;
 	
 	this.init = function () {
-	 socket = io('localhost:3000');
+	 socket = io('localhost:9090');
 	},
 	this.get = function () {
 		return socket;
@@ -16,9 +16,7 @@ app.service("socket", function() {
 app.service("pstatus", function() {
 	var p = {
 		1: 'ion-checkmark-circled green',
-		2: 'ion-checkmark-circled yellow',
-		3: 'ion-checkmark-circled red',
-		4: 'ion-alert red'
+		2: 'ion-checkmark-circled red'
 	};
 	
 	this.get = function (id) {
@@ -37,7 +35,7 @@ app.factory("api", function($http) {
 	var BASE_URL_ORGANIZATION = BASE_FHIR_INFO_URL + "/Organization/";
 	var BASE_URL_OBSERVATION = BASE_FHIR_INFO_URL + "/Observation";
 
-	var accessToken = '';
+	var accessToken = 'S6XRAP5odazgAHe7jkMgmsTDu92G';
 
 	function getPatient(patient_id) {
 		return $http({

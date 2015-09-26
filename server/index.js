@@ -10,6 +10,17 @@ var server = restify.createServer({
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 
+var io = require('socket.io')(server.server);
+io.on('connection', function (socket) {
+  console.log('socket connected');
+  
+  service.setSocket(socket);
+
+  socket.on('disconnect', function () {
+      console.log('socket disconnected');
+  });
+});
+
 server.get('/echo/:name', function (req, res, next) {
   res.send(req.params);
   return next();

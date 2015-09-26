@@ -56,16 +56,19 @@ angular.module('starter.controllers', [])
       return age;
 }
   $rootScope.patients = []; 
-  api.getPatient('a101').success(function(data) {
+  api.getPatient('a102').success(function(data) {
     data.age = getAge(data.birthDate);
-    data.id = 'a101';
+    data.id = 'a102';
     if(data.gender.coding[0].code == "M") {
       data.image = 'http://api.randomuser.me/portraits/med/men/6.jpg';  
     } else {
       data.image = 'http://api.randomuser.me/portraits/med/women/4.jpg';
     }
+
     
     $rootScope.patients.push(data);
+     $rootScope.patients[0].alert =  false;
+  $rootScope.patients[0].status =  pstatus.get(1);
   });
   /*$scope.patients = [{
     "id":"1",
@@ -104,21 +107,27 @@ angular.module('starter.controllers', [])
   }];*/
 
   var sock  = socket.get();
-sock.on('text', function(text) {
+ 
+  sock.on('abnormal', function(text) {
   //console.log(text);
      if($rootScope.patients[0]) {
-      console.log(text);
-      
-      if(text == 3) {
-        $rootScope.patients[0].alert =  true;
-      } else {
-        $rootScope.patients[0].alert =  false;
+        console.log(text);
+        if(text) {
+          $rootScope.patients[0].alert =  true;
+          $rootScope.patients[0].status =  pstatus.get(2);
+          $rootScope.$apply();
+        }    
       }
+  })
 
-      $rootScope.patients[0].status =  pstatus.get(text);
-      $rootScope.$apply();
-      
-      }
+
+  sock.on('MDC_PULS_OXIM_PULS_RATE', function(text) {
+     console.log(text);
+     if($rootScope.patients[0]) {
+         console.log(text);
+          $rootScope.patients[0].pulse =  text.value;
+          $rootScope.$apply();
+        }    
   })
 
 })
