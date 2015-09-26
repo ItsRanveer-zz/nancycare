@@ -41,8 +41,33 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PatientsCtrl', function($scope) {
-  $scope.patients = [{
+.controller('PatientsCtrl', function($scope,socket,api, $rootScope, pstatus) {
+
+  function getAge(dateString) 
+  {
+      var today = new Date();
+      var birthDate = new Date(dateString);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+      {
+          age--;
+      }
+      return age;
+}
+  $rootScope.patients = []; 
+  api.getPatient('a101').success(function(data) {
+    data.age = getAge(data.birthDate);
+    data.id = 'a101';
+    if(data.gender.coding[0].code == "M") {
+      data.image = 'http://api.randomuser.me/portraits/med/men/6.jpg';  
+    } else {
+      data.image = 'http://api.randomuser.me/portraits/med/women/4.jpg';
+    }
+    
+    $rootScope.patients.push(data);
+  });
+  /*$scope.patients = [{
     "id":"1",
     "name": "Armand Valencia",
     "phone": "1-398-201-9251",
@@ -76,18 +101,32 @@ angular.module('starter.controllers', [])
     "phone": "1-316-162-9468",
     "picture": "57091",
     "status" : "ion-checkmark-circled green"
-  }];
+  }];*/
+
+  var sock  = socket.get();
+sock.on('text', function(text) {
+  //console.log(text);
+     if($rootScope.patients[0]) {
+      console.log(text);
+      
+      if(text == 3) {
+        $rootScope.patients[0].alert =  true;
+      } else {
+        $rootScope.patients[0].alert =  false;
+      }
+
+      $rootScope.patients[0].status =  pstatus.get(text);
+      $rootScope.$apply();
+      
+      }
+  })
+
 })
 
-.controller('PatientCtrl', function($scope, $stateParams) {
+.controller('PatientCtrl', function($scope, $stateParams, $rootScope,$ionicLoading,$location) {
 
-  $scope.patient = {
-          "id":"5",
-          "name": "Armand Valencia",
-          "phone": "1-398-201-9251",
-          "picture": "41908",
-          "status" : "ion-checkmark-circled green"
-  };
+console.log($rootScope.patients);
+  $scope.patient = $rootScope.patients == undefined ? [] : $rootScope.patients[0];
 
   $scope.doctors = [{
         "name": "Josephine Donovan",
@@ -165,6 +204,11 @@ angular.module('starter.controllers', [])
     $scope.message.message = "";
   }
 
+  $scope.inform = function(name){
+     $ionicLoading.show({ template: 'Notification sent to '+name, noBackdrop: true, duration: 2000 });
+     $location.path("/app/patients/1");
+  }
+
   $scope.chart = null;
 
   $scope.showGraph = function() {
@@ -205,12 +249,15 @@ angular.module('starter.controllers', [])
 
 
 })
-.controller('LoginCtrl', function($scope, $stateParams,$location) {
+.controller('LoginCtrl', function($scope, $stateParams,$location,$ionicLoading) {
   //document.getElementsByClassName("ion-navicon")[1].style.display doLogin
   $scope.doLogin =  function(){
     $location.path("/app/patients");
   }
 })
-.controller('ScheduleCtrl',function($scope, $stateParams) {
-
+.controller('ScheduleCtrl',function($scope, $stateParams,$ionicLoading,$location) {
+  $scope.schedule = function(){
+    $ionicLoading.show({ template: 'Schedule Added Successfullly!', noBackdrop: true, duration: 2000 });
+    $location.path("/app/patients/1");
+  }
 });

@@ -1,7 +1,7 @@
 <ion-view title="Rendering Doctors">
   <ion-content>
     <ion-list>
-        <ion-item  ng-repeat="doctor in doctors track by $index" href="#" ng-click="refer()">
+        <ion-item  ng-repeat="doctor in doctors track by $index" href="#" ng-click="inform('{{doctor.name}}')">
             <div class="row">
               <div class="col col-25"><img class="avatar" src="http://api.randomuser.me/portraits/med/women/{{$index+1}}2.jpg"></div>
               <div class="col col-75">

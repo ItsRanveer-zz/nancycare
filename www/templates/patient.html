@@ -1,10 +1,15 @@
 <ion-view >
   <ion-content>
-  	<div class="row" style="background:#34AADC" ng-init="showGraph()">
+  	<div class="row blue" ng-init="showGraph()">
   		<div class="col text-center" >
-  			<h2 class="white light-text">{{patient.name}}</h2>
-  			<p class="white light-text">Female | 03.06.1990</p>
-  			<img class="avatar" style="width:38%;margin-bottom: 50px;margin-top:10px" src="http://api.randomuser.me/portraits/med/women/{{patient.id}}.jpg">
+  			<h2 class="white light-text">{{patient.name[0].text}}</h2>
+  			<p class="white light-text">{{patient.gender.coding[0].display}} | {{patient.age}} Yrs</p>
+        <p class="white light-text">{{patient.telecom[0].value}}</p>
+        <p class="white light-text">{{patient.telecom[1].value}}</p>
+        <p class="white light-text">{{patient.address[0].line[0]}}, {{patient.address[0].city}}, {{patient.address[0].state}}, {{patient.address[0].zip}}</p>
+       
+
+  			<img class="avatar" style="width:38%;margin-bottom: 50px;margin-top:10px" ng-src="{{patient.image}}">
   			<div class="list">
   			  <div class="col ultra-light text-center white">Good Mood</div>
 			  <div class="item range range-positive">
@@ -65,8 +70,8 @@
 	    Refer
 	  </a>
 
-	  <a href="#" class="item item-icon-left">
-	    <i class="icon ion-ios-telephone color-blue"></i>
+	  <a href="tel:+1 {{patient.telecom[1].value}}" class="item item-icon-left" ng-if="patient.telecom[1].value">
+	    <i class="icon ion-ios-telephone color-blue" ></i>
 	    Phone number
 	  </a>
 
@@ -79,12 +84,6 @@
 	    <i class="icon ion-alert-circled color-blue"></i>
 	    Emergency
 	  </a>
-
-	  <a href="#" class="item item-icon-left">
-	    <i class="icon ion-alert-circled color-blue"></i>
-	    Ignore
-	  </a>
-
 	  <a href="#/app/schedule/{{patient.id}}" class="item item-icon-left">
 	    <i class="icon ion-calendar color-blue"></i>
 	    Schedule Appointment
