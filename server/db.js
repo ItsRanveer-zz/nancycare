@@ -23,7 +23,7 @@ db.prototype.insert = function (collectionName, data, cb) {
 
 db.prototype.find = function (collectionName, patientId, cb) {
 
-	var cursor = database.collection(collectionName).findAll( { "patientId": patientId });
+	var cursor = database.collection(collectionName).find( { "patientId": patientId });
 
 	cursor.each(function(err, doc) {
 		if (doc != null) {

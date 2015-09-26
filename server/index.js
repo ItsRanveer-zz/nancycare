@@ -24,7 +24,19 @@ server.get('/patient/:id/token/:token', function (req, res, next) {
   	res.send(data);
   	return next();
   });
-  
+});
+
+server.get('/patient/:id/vital/:code', function (req, res, next){
+  var query = req.params.query;
+  console.log(req.params);
+  service.search(req.params.id, req.params.code, query, function (err, data){
+    if (err) {
+      res.send(500, err);
+      return;
+    };
+    res.send(data);
+    return next();
+  });
 });
  
 

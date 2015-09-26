@@ -2,6 +2,7 @@ var db = require('./db.js');
 var restler =require('restler');
 var _ = require('underscore');
 var async = require('async');
+var uuid = require('uuid');
 
 var service = function (){
 }
@@ -56,20 +57,37 @@ function getData (url, args, cb) {
 	});
 }
 
-
 function getVitals (patientId, data) {
 	async.each(data.entry, function (entry, cb) {
+		var collectionName = entry.content.name.coding[0].display;
 		var obj = entry.content.valueQuantity;
 		obj.patientId = patientId;
+		obj.id = uuid.v4();
 		obj.appliesDateTime = entry.content.appliesDateTime;
-		db.insert(entry.content.name.coding[0].display, obj);
+		obj.display = entry.content.name.coding[1].display;
+		dorules(collectionName, obj);
+		db.insert(collectionName, obj);
 		cb();
 	});
 }
 
-service.prototype.saveBP = function(patientId, data, cb){
-	data.patientId = patientId;
-	db.insert('bp', data, cb);
+function dorules (collectionName, obj) {
+  if (collectionName === 'MDC_PULS_OXIM_PULS_RATE') {
+  	if (obj.value < 60 || obj.value > 80) {
+  		obj.abnormal = true;
+  	}
+  };
+  if (collectionName === 'MDC_RESP_RATE') {
+  	if (obj.value < 12 || obj.value > 25) {
+  		obj.abnormal = true;
+  	}
+  };
+}
+
+
+service.prototype.search =  function (patientId, collectioname, filter, cb) {
+	filter.patientId = patientId;
+	db.search(collectioname, filter, cb);
 }
 
 module.exports = new service();
