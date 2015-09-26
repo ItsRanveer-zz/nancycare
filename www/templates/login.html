@@ -1,20 +1,17 @@
-<ion-view view-title="Login">
+<ion-view>
   <ion-content>
-    <h1 class="title">Login</h1>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
+      <div class="list text-center logo">
+        <img src="img/ionic.png"><br>
+        <h1 class="color-blue">Nextgen Care</h1>
       </div>
-    </form>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="text" placeholder="Email Id">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password">
+        </label>
+        <button class="button button-block button-positive blue" ng-click="doLogin()">Log in</button>
+      </div>
   </ion-content>
 </ion-view>

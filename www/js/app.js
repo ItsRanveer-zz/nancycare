@@ -25,7 +25,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
@@ -37,6 +37,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     views: {
       'menuContent': {
         templateUrl: 'templates/appointments.html'
+      }
+    }
+  })
+
+  .state('app.login', {
+    url: '/login',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/login.html',
+        controller :'LoginCtrl'
       }
     }
   })
@@ -67,7 +77,38 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PatientCtrl'
       }
     }
+  })
+
+  .state('app.message', {
+    url: '/message/:patientId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/message.html',
+        controller: 'PatientCtrl'
+      }
+    }
+  })
+
+  .state('app.schedule', {
+    url: '/schedule/:patientId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/schedule.html',
+        controller: 'ScheduleCtrl'
+      }
+    }
+  })
+
+  .state('app.refer', {
+    url: '/refer/:patientId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/refer.html',
+        controller: 'PatientCtrl'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/patients');
+  //$urlRouterProvider.otherwise('/app/patients');
+  $urlRouterProvider.otherwise('/app/login');
 });

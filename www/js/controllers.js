@@ -82,12 +82,88 @@ angular.module('starter.controllers', [])
 .controller('PatientCtrl', function($scope, $stateParams) {
 
   $scope.patient = {
-    "id":"5",
-    "name": "Armand Valencia",
-    "phone": "1-398-201-9251",
-    "picture": "41908",
-    "status" : "ion-checkmark-circled green"
+          "id":"5",
+          "name": "Armand Valencia",
+          "phone": "1-398-201-9251",
+          "picture": "41908",
+          "status" : "ion-checkmark-circled green"
   };
+
+  $scope.doctors = [{
+        "name": "Josephine Donovan",
+        "phone": "(08) 8939 8836",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Jaquelyn Kirby",
+        "phone": "(01) 4229 9910",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Teagan Giles",
+        "phone": "(02) 6537 9115",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Cassady Morton",
+        "phone": "(07) 9957 1737",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Lavinia Hamilton",
+        "phone": "(09) 0541 5498",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Hilary Reyes",
+        "phone": "(03) 6915 4495",
+        "email": "FemaleName@secure.philips.com"
+      },
+      {
+        "name": "Hyacinth Mcmillan",
+        "phone": "(05) 1599 2183",
+        "email": "FemaleName@secure.philips.com"
+      }];
+
+  $scope.messages  = [{
+        "name" : "John Carry",
+        "pic" : "http://bucketadmin.themebucket.net/images/chat-user-thumb.png",
+        "time" : "10:00 AM",
+        "message" : "Hello!",
+        "class" : ""
+      },{
+        "name" : "Lisa Peterson",
+        "pic" : "http://bucketadmin.themebucket.net/images/chat-user-thumb-f.png",
+        "time" : "10:00 AM",
+        "message" : "Hi, How are you? What about our next meeting?",
+        "class" : "odd"
+      },{
+        "name" : "John Carry",
+        "pic" : "http://bucketadmin.themebucket.net/images/chat-user-thumb.png",
+        "time" : "10:00 AM",
+        "message" : "Yeah everything is fine",
+        "class" : ""
+      },{
+        "name" : "Lisa Peterson",
+        "pic" : "http://bucketadmin.themebucket.net/images/chat-user-thumb-f.png",
+        "time" : "10:00 AM",
+        "message" : "Wow that's great",
+        "class" : "odd"
+      }];
+  $scope.message = {
+        "name" : "Lisa Peterson",
+        "pic" : "http://bucketadmin.themebucket.net/images/chat-user-thumb-f.png",
+        "time" : "10:00 AM",
+        "message" : "",
+        "class" : "odd"
+  };
+  $scope.sendChat = function(){
+    var chat = JSON.stringify($scope.message) ;
+    $scope.messages.push(JSON.parse(chat));
+    var chatEl = document.getElementById("mychatelement");
+    chatEl.scrollTop = chatEl.scrollHeight;
+    $scope.message.message = "";
+  }
 
   $scope.chart = null;
 
@@ -129,5 +205,12 @@ angular.module('starter.controllers', [])
 
 
 })
-.controller('LoginCtrl', function($scope, $stateParams) {
+.controller('LoginCtrl', function($scope, $stateParams,$location) {
+  //document.getElementsByClassName("ion-navicon")[1].style.display doLogin
+  $scope.doLogin =  function(){
+    $location.path("/app/patients");
+  }
+})
+.controller('ScheduleCtrl',function($scope, $stateParams) {
+
 });

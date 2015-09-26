@@ -1,0 +1,30 @@
+<ion-view title="Message">
+  <ion-content>
+    <section class="panel">
+        <div class="panel-body">
+            <div class="chat-conversation" id="mychatelement">
+                <ul class="conversation-list" style="width: auto;">
+                    <li  ng-repeat="msg in messages track by $index" class="clearfix {{msg.class}}">
+                        <div class="chat-avatar" >
+                            <img src="{{msg.pic}}">
+                            <i>{{msg.time}}</i>
+                        </div>
+                        <div class="conversation-text">
+                            <div class="ctext-wrap">
+                                <i>{{msg.name}}</i>
+                                <p>
+                                   {{msg.message}}
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+  </ion-content>
+  <div class="bar bar-footer">
+      <input type="text" class="form-control chat-input" ng-model="message.message" placeholder="Enter your message">
+      <button class="button button-clear" ng-click="sendChat()">Send</button>
+  </div>
+</ion-view>
