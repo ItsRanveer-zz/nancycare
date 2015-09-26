@@ -23,17 +23,17 @@ body{
 	text-align: center;
 }
 .blue{
-	background:#34AADC
+	background:#88bde3
 }
 .button-positive{
-  background:#34AADC !important;
+  background:#88bde3 !important;
   border:none !important;
 }
 .color-blue{
-  color:#34AADC
+  color:#88bde3
 }
 .bar.bar-stable{
-	background-color: #34AADC;color: #fff;
+	background-color: #88bde3;color: #fff;
 	border:none;
 }
 .light-text{
@@ -75,7 +75,7 @@ calendar {
 calendar >div.header {
   float: left;
   width: 100%;
-  background: #34AADC;
+  background: #88bde3;
   height: 40px;
   color: white;
 }
@@ -150,15 +150,15 @@ calendar >div.week >span.day.different-month {
   color: #C0C0C0;
 }
 calendar >div.week >span.day.selected {
-  background: #34AADC;
+  background: #88bde3;
   color: white;
 }
 calendar >div.week.names>span {
-  color: #34AADC;
+  color: #88bde3;
   font-weight: normal;
 }
 .border{
-  border:2px solid #34AADC;
+  border:2px solid #88bde3;
   margin: 0 20px;
 }
 .form-control {
