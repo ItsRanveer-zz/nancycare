@@ -96,18 +96,35 @@ angular.module('starter.controllers', [])
           bindto: '#chart',
           data: {
             columns: [
-              ['data1', 30, 200, 100, 400, 150, 250],
-              ['data2', 50, 20, 10, 40, 15, 25]
+              ['data1', 7,8,9,7,8,6,9,10,8,5,9,8]
             ],
             types: {
-                data1: 'area-spline',
-                data2: 'area-spline'
+                data1: 'area-spline'
             }
           },
           size: {
             height: 180
           }
-      });     
+      });  
+
+      $scope.chart1 = c3.generate({
+          bindto: '#chart1',
+          data: {
+              columns: [
+                  ['data', 3]
+              ],
+              type: 'gauge',
+          },
+          gauge: {
+              min: 0,
+              max: 10,
+              label: {
+                format: function (value, ratio) {
+                  return value;
+                }
+              }
+          }
+      });
   }
 
 

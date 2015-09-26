@@ -49,4 +49,4 @@ body{
 .unit{font-size:13px; }
 .ultra-light{  font-size: 12px;
   text-transform: uppercase;}
-  .bar.bar-stable .title,.bar-stable .button.button-icon{color:white;}
+  .bar.bar-stable .title,.bar-stable .button.button-icon,.bar-stable .button.button-clear{color:white;}
