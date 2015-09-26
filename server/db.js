@@ -1,29 +1,50 @@
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
-var database; 
+var database;
+
 // Connect to the db
-MongoClient.connect("mongodb://localhost:27017/nancycare", function(err, db) {
+var url = 'mongodb://localhost:27017/nancycare';
+MongoClient.connect(url, function(err, db) {
   if(err) { return console.dir(err); }
+  console.log("Connected correctly to server.");
   database = db;
 });
-
+	
 var db = function (){
 
 }
 
 db.prototype.insert = function (collectionName, data, cb) {
-	cb(null, data);
+
+	database.collection(collectionName).insert( data, function(err, result) {
+	    cb(null, data);
+  	});
 }
 
 db.prototype.find = function (collectionName, patientId, cb) {
-	var data;
-	cb(null, data);
+
+	var cursor = database.collection(collectionName).findAll( { "patientId": patientId });
+
+	cursor.each(function(err, doc) {
+		if (doc != null) {
+		 console.dir(doc);
+		} else {
+		 cb(null, data);
+		}
+	});
 }
 
 db.prototype.search = function (collectionName, criteria, cb) {
-	var data;
-	cb(null, data);
-}
 
+	var cursor = database.collection(collectionName).find(criteria).sort( { "appliesDateTime": 1 } );
+	
+	cursor.each(function(err, doc) {
+		if (doc != null) {
+		 console.dir(doc);
+		} else {
+		 cb(null, data);
+		}
+	});
+}
 
 module.exports = new db();
